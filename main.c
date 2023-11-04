@@ -7,10 +7,11 @@
 int main(void)
 {
 	pid_t c_pid;
-	int status, n;
+	int status, n, is_terminal;
 	char *arg[20];
 	char buffer[100];
-	
+
+	is_terminal = isatty(STDIN_FILENO);
 	status = 0;
 	while (1)
 	{
@@ -39,13 +40,15 @@ int main(void)
 			buffer[n] = '\0';
 			arg[0] = buffer;
 			arg[1] = NULL;
-			execve(arg[0], arg, NULL);
+			execve(arg[0], arg, environ);
 			perror(arg[0]);
 			exit(-1);
 		}
 		else
 		{
 			wait(&status);
+			if (!is_terminal)
+				break;
 		}
 	}
 
