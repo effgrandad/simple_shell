@@ -24,19 +24,24 @@ int main(void)
 		}
 		else if (c_pid == 0)
 		{
-			n = write(STDOUT_FILENO, "#cisfun$ ", 9);
-			if (n == -1)
+			if (is_terminal)
 			{
-				perror("Write failed");
-				exit(-1);
+				n = write(STDOUT_FILENO, "#cisfun$ ", 9);
+				if (n == -1)
+				{
+					perror("Write failed");
+					exit(-1);
+				}
 			}
 			n = read(STDIN_FILENO, buffer, sizeof(buffer) - 1);
-			if (n == - 1)
+			if (n == -1)
 			{
 				perror("Read failed");
 				exit(-1);
 			}
 			n = (n > 0 && buffer[n - 1] == '\n') ? n - 1 : n;
+			if (n == 0)
+				exit(0);
 			buffer[n] = '\0';
 			arg[0] = buffer;
 			arg[1] = NULL;
@@ -47,8 +52,8 @@ int main(void)
 		else
 		{
 			wait(&status);
-			if (!is_terminal)
-				break;
+			if (!is_terminal || (WIFEXITED(status) && WEXITSTATUS(status) == 0))
+				exit(0);
 		}
 	}
 
