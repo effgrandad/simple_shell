@@ -10,6 +10,7 @@ extern char** environ;
 #include <string.h>
 #include <unistd.h>
 
-void print_prompt(int terminal);
-
+int print_prompt(int terminal);
+int tokenize_input(char *buffer, char *token_array[], char *delimiter, int read_count);
+char *_strchr(const char *str, char c);
 #endif

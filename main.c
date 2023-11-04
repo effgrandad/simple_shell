@@ -7,12 +7,13 @@
 int main(void)
 {
 	pid_t c_pid;
-	int status, n, is_terminal;
-	char *arg[20];
+	int status, n, is_terminal, e;
+	char *arg[200], *delimiter;
 	char buffer[100];
 
 	is_terminal = isatty(STDIN_FILENO);
 	status = 0;
+	delimiter = " ";
 	while (1)
 	{
 		c_pid = fork();
@@ -24,27 +25,19 @@ int main(void)
 		}
 		else if (c_pid == 0)
 		{
-			if (is_terminal)
-			{
-				n = write(STDOUT_FILENO, "#cisfun$ ", 9);
-				if (n == -1)
-				{
-					perror("Write failed");
-					exit(-1);
-				}
-			}
+			e = print_prompt(is_terminal);
+			if (e == -1)
+				exit(-1);
 			n = read(STDIN_FILENO, buffer, sizeof(buffer) - 1);
 			if (n == -1)
 			{
 				perror("Read failed");
 				exit(-1);
 			}
-			n = (n > 0 && buffer[n - 1] == '\n') ? n - 1 : n;
-			if (n == 0)
-				exit(0);
-			buffer[n] = '\0';
-			arg[0] = buffer;
-			arg[1] = NULL;
+			e = tokenize_input(buffer, arg, delimiter, n);
+			if (e == 0)
+				exit(98);
+			arg[e] = NULL;
 			execve(arg[0], arg, environ);
 			perror(arg[0]);
 			exit(-1);
@@ -52,21 +45,66 @@ int main(void)
 		else
 		{
 			wait(&status);
-			if (!is_terminal || (WIFEXITED(status) && WEXITSTATUS(status) == 0))
+			if (!is_terminal || (WIFEXITED(status) && WEXITSTATUS(status) == 98))
 				exit(0);
 		}
 	}
 
 }
-void print_prompt(int terminal)
+int print_prompt(int terminal)
 {
+	int n;
+
 	if (terminal)
 	{
 		n = write(STDOUT_FILENO, "#cisfun$ ", 9);
 		if (n == -1)
 		{
 			perror("Write failed");
-			exit(-1);
+			return (-1);
 		}
 	}
+	return (0);
+}
+int tokenize_input(char *buffer, char *token_array[], char *delimiter, int read_count)
+{
+	int n = read_count;
+	char *token, *endquote;
+	int token_count = 0;
+
+	n = (n > 0 && buffer[n - 1] == '\n') ? n - 1 : n;
+	if (n == 0)
+		return (0);
+	buffer[n] = '\0';
+	token = strtok(buffer, delimiter);
+	while (token != NULL)
+	{
+		if (token[0] == '"')
+		{
+			endquote = _strchr(token + 1, '"');
+			printf("OKayyy");
+			if (endquote != NULL)
+			{
+				token_array[token_count] = token;
+				token = endquote + 1;
+			}
+		}
+		else
+		{
+			token_array[token_count] = token;
+			token = strtok(NULL, delimiter);
+		}
+		token_count++;
+	}
+	return (token_count);
+}
+char *_strchr(const char *str, char c)
+{
+	while (*str != '\0')
+	{
+		if (*str == c)
+			return (char *)str;
+		str++;
+	}
+	return (NULL);
 }
