@@ -9,4 +9,7 @@ extern char** environ;
 #include <sys/types.h>
 #include <string.h>
 #include <unistd.h>
+
+void print_prompt(int terminal);
+
 #endif

@@ -58,3 +58,15 @@ int main(void)
 	}
 
 }
+void print_prompt(int terminal)
+{
+	if (terminal)
+	{
+		n = write(STDOUT_FILENO, "#cisfun$ ", 9);
+		if (n == -1)
+		{
+			perror("Write failed");
+			exit(-1);
+		}
+	}
+}
