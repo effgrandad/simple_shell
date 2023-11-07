@@ -35,11 +35,11 @@ char *get_env(info_t *info, const char *name)
 }
 
 /**
- * myset_env - set up a new envron, or alter an already existing one
+ * my_int my_unset_env(info_t *info)set_env - set up a new envron, or alter an already existing one
  * @info: struct that holds possible arguments.
  *  Return: Always 0
  */
-int myset_env(info_t *info)
+int my_set_env(info_t *info)
 {
 	if (info->argc != 3)
 	{
@@ -52,11 +52,11 @@ int myset_env(info_t *info)
 }
 
 /**
- * _myunsetenv - erases an environment variable
+ * my_unset_env - erases an environment variable
  * @info: this struct holds possible arguments, to maintain function prototype.
  * Return: Always 0
  */
-int my_unsetenv(info_t *info)
+int my_unset_env(info_t *info)
 {
 	int j;
 
