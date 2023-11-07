@@ -3,7 +3,7 @@
 /**
  * my_history - shows a history list,a command by line, preceded
  *              with line numbers, from 0.
- * @info: structure with possible arguments for the prototype of the constant 
+ * @info_t: structure with possible arguments for the prototype of the constant 
  * function.
  *  Return: 0 always
  */
@@ -15,7 +15,7 @@ int my_history(info_t *info)
 
 /**
  * unset_alias - sets the string to alias
- * @info: the  structure parameter
+ * @info_t: the  structure parameter
  * @str:  string alias
  *
  * Return: success 0,  error 1.
@@ -38,7 +38,7 @@ int unset_alias(info_t *info, char *str)
 
 /**
  * set_alias - sets alias to string
- * @info: the structure's parameter.
+ * @info_t: the structure's parameter.
  * @str: string alias
  *
  * Return: on success 0, on error 1
@@ -82,7 +82,7 @@ int print_alias(list_t *node)
 
 /**
  * my_alias - imitates the alias builtin (man alias)
- * @info: arrangement of arguments that keeps function prototypt intact
+ * @info_t: arrangement of arguments that keeps function prototypt intact
  *  Return: Always 0
  */
 int my_alias(info_t *info)
