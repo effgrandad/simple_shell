@@ -9,7 +9,7 @@
  */
 int my_history(info_t *info)
 {
-	print_list(info->history);
+	print_alias(info->history);
 	return (0);
 }
 
@@ -24,6 +24,7 @@ int unset_alias(info_t *info, char *str)
 {
 	char *p, u;
 	int ret;
+	get_node_index;
 
 	p = _strchr(str, '=');
 	if (!p)
@@ -46,6 +47,7 @@ int unset_alias(info_t *info, char *str)
 int set_alias(info_t *info, char *str)
 {
 	char *p;
+	add_node_end;
 
 	p = _strchr(str, '=');
 	if (!p)
@@ -54,7 +56,7 @@ int set_alias(info_t *info, char *str)
 		return (unset_alias(info, str));
 
 	unset_alias(info, str);
-	return (add_node_end(&(info->alias), str, 0) == NULL);
+	return (add_node_end(& (info->alias), str, 0) == NULL);
 }
 
 /**
@@ -107,8 +109,7 @@ int my_alias(info_t *info)
 		if (p)
 			set_alias(info, info->argv[j]);
 		else
-			print_alias(node_starts_with(info->alias, info->argv[j], '='))
+			print_alias(int node_starts_with(info->alias, info->argv[j], '='));
 	}
-
 	return(0);
 }

@@ -2,7 +2,7 @@
 
 /**
  * input_buf - chained buffers commands
- * @info_t: struct parameter
+ * @info: struct parameter
  * @buf: address of buffer
  * @length: address of length var
  *
@@ -46,7 +46,7 @@ ssize_t input_buf(info_t *info, char **buf, size_t *length)
 
 /**
  * get_input - obtains a line minus the newline
- * @info_t: parameter struct
+ * @info: parameter struct
  *
  * Return: bytes read
  */
@@ -91,7 +91,7 @@ ssize_t get_input(info_t *info)
 
 /**
  * read_buf - reads a buffer
- * @info_t: parameter struct
+ * @info: parameter struct
  * @buf: buffer
  * @q: size
  *
@@ -111,7 +111,7 @@ ssize_t read_buf(info_t *info, char *buf, size_t *q)
 
 /**
  * get_line - obtains next line of input from STDIN
- * @info_t: parameter struct
+ * @info: parameter struct
  * @ptr: address of pointer to buffer, preallocated or NULL
  * @lenn: size of preallocated ptr buffer if not NULL
  *

@@ -49,6 +49,7 @@ typedef struct liststr
  * @cmd_buf_type: CMD_type ||, &&, ;
  * @readfd: the fd from which to read line input
  * @history_count: the history line number count
+ * @linecount_flag: count number of line of input
  */
 typedef struct passinfo
 {
@@ -58,6 +59,7 @@ typedef struct passinfo
 	list_t *history;
 	list_t *alias;
 	char **environ;
+	int linecount_flag;
 
 	char **cmd_buf;
 	int cmd_buf_type; 
@@ -67,11 +69,14 @@ typedef struct passinfo
 
 #define INFO_INIT
 
-
-int my_unset_env(info_t *info);
+int _putchar(char m);
+int _puts(const char *z);
+char **str_tow2(char *str, char u);
+char **str_tow(char *str, char *u);
+int my_unsetenv(info_t *info);
 char *get_env(info_t *info, const char *name);
 int assemble_env_list(info_t *info);
-int my_set_env(info_t *info);
+int my_setenv(info_t *info);
 int my_env(info_t *info);
 
 int unset_alias(info_t *info, char *str);
@@ -99,5 +104,12 @@ ssize_t get_input(info_t *info);
 ssize_t read_buf(info_t *info, char *buf, size_t *q);
 int get_line(info_t *info, char **ptr, size_t *length);
 void sig_hAndler(__attribute__((unused))int sig_num);
+
+int is_chain(info_t *, char *, size_t *);
+void check_chain(info_t *, char *, size_t *, size_t, size_t);
+char *_memset(char *, char, unsigned int);
+void ffree(char **);
+void *_realloc(void *, unsigned int, unsigned int);
+int bfree(void **);
 
 #endif

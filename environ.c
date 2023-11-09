@@ -26,7 +26,7 @@ char *get_env(info_t *info, const char *name)
 
 	while (node)
 	{
-		p = starts_with(node->str, name);
+		p = begins_with(node->str, name);
 		if (p && *p)
 			return (p);
 		node = node->next;
@@ -35,38 +35,38 @@ char *get_env(info_t *info, const char *name)
 }
 
 /**
- * my_int my_unset_env(info_t *info)set_env - set up a new envron, or alter an already existing one
- * @info_t: struct that holds possible arguments.
- *  Return: Always 0
+ * my_setenv - set up a new envron, or alter an already existing one
+ * @info: struct that holds possible arguments.
+ * Return: Always 0
  */
-int my_set_env(info_t *info)
+int my_setenv(info_t *info)
 {
 	if (info->argc != 3)
 	{
-		_eputs("Incorrect number of arguements\n");
+		_puts("Incorrect number of arguements\n");
 		return (1);
 	}
-	if (set_env(info, info->argv[1], info->argv[2]))
+	if (setenv(info, info->argv[1], info->argv[2]))
 		return (0);
 	return (1);
 }
 
 /**
- * my_unset_env - erases an environment variable
- * @info_t: this struct holds possible arguments, to maintain function prototype.
+ * my_unsetenv - erases an environment variable
+ * @infot: this struct holds possible arguments, to maintain function prototype.
  * Return: Always 0
  */
-int my_unset_env(info_t *info)
+int my_unsetenv(info_t *info)
 {
 	int j;
 
 	if (info->argc == 1)
 	{
-		_eputs("Too few arguements.\n");
+		_puts("Too few arguements.\n");
 		return (1);
 	}
 	for (j = 1; j <= info->argc; j++)
-		_unsetenv(info, info->argv[j]);
+		unsetenv(info, info->argv[j]);
 
 	return (0);
 }
